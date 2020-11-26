@@ -54,7 +54,7 @@ export const Recipe = () => {
                             name="amount"
                             defaultValue={0}
                             rules={{ max: 10 }}
-                            render={props => <NumberInput id="amount" {...props} />}
+                            render={({ value, onChange }) => <NumberInput id="amount" onChange={onChange} checked={value} />}
                         />
                         {errors.amount && (
                             <ErrorMessage>Maximum number of servings is 10.</ErrorMessage>
