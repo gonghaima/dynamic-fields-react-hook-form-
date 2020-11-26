@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useForm, Controller } from "react-hook-form";
 import { Button, Form } from "semantic-ui-react";
 import { FieldSet } from "./FieldSet";
-import { useForm } from "react-hook-form";
+import { NumberInput } from "./NumberInput"
 
 const fieldWidth = 8;
 
 export const Recipe = () => {
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, control } = useForm();
 
     const submitForm = formData => {
         console.log(formData);
@@ -41,18 +42,22 @@ export const Recipe = () => {
                             </ErrorMessage>
                         )}
                     </Form.Field>
+
                     <Form.Field width={fieldWidth} error={!!errors.amount}>
                         <label htmlFor="amount">Servings</label>
-                        <input
-                            type="number"
+                        <Controller
+                            control={control}
                             name="amount"
-                            id="amount"
-                            ref={register({ max: 10 })}
+                            defaultValue={0}
+                            rules={{ max: 10 }}
+                            render={({ value, onChange }) => <NumberInput id="amount" onChange={onChange} checked={value} />}
                         />
                         {errors.amount && (
                             <ErrorMessage>Maximum number of servings is 10.</ErrorMessage>
                         )}
                     </Form.Field>
+
+
                 </FieldSet>
 
                 <Form.Field>
